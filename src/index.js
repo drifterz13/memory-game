@@ -51,13 +51,11 @@ const BoardLayout = () => {
 
   const DELAY = 500;
 
-  useEffect(() => {
-    if (showItems.size === 16) {
-      setShowItems(new Set());
-      setItems(initialState);
-      console.log("You win!");
-    }
-  }, [showItems]);
+  const reset = () => {
+    setShowItems(new Set());
+    setItems(initialState);
+    setGuessItems([]);
+  };
 
   useEffect(() => {
     if (guessItems.length === 2) {
@@ -65,6 +63,11 @@ const BoardLayout = () => {
       const item2 = items[guessItems[1]];
       if (item1 === item2) {
         console.log("matched");
+        if (showItems.size === items.length) {
+          alert("You win!");
+          reset();
+          return;
+        }
         setShowItems((state) => {
           let newState = state;
           newState.add(guessItems[0]);
@@ -87,7 +90,7 @@ const BoardLayout = () => {
       setGuessItems([]);
       return;
     }
-  }, [guessItems]);
+  }, [guessItems, showItems]);
 
   const guess = (index) => {
     if (computing) {
