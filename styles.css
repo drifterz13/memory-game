@@ -4,6 +4,7 @@
   width: 600px;
   height: 600px;
   border-radius: 2px;
+  margin: 0 auto;
 }
 
 .board-layout {
