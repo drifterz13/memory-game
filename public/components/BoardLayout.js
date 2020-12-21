@@ -1,17 +1,9 @@
-import {
-  render,
-  html,
-  useState,
-  useEffect,
-} from "https://unpkg.com/htm/preact/standalone.module.js";
+import { useState, useEffect } from "preact/hooks";
+import { Box } from "./Board";
 
-import { icons } from "./icons/index.js";
+import { icons } from "../icons/index";
 
-const Box = (props) => {
-  return html` <div class="box" ...${props} /> `;
-};
-
-const BoardLayout = () => {
+export function BoardLayout() {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
     const count = {};
@@ -89,25 +81,17 @@ const BoardLayout = () => {
     setShowIndexes((state) => [...state, index]);
   };
 
-  return html`
+  return (
     <div class="board-layout">
-      ${items.map(
-        (item, index) => html` <${Box} onClick=${() => guess(index)}>
-          ${showIndexes.includes(index) && html` <${icons[item]} /> `}
-        <//>`
-      )}
-    </div>
-  `;
-};
+      {items.map((item, index) => {
+        const IconComponent = icons[item];
 
-render(
-  html`
-    <section class="header-section">
-      <h1>Silly Brain 🧠🦕</h1>
-    </section>
-    <div class="board-layout-container">
-      <${BoardLayout} />
+        return (
+          <Box onClick={() => guess(index)}>
+            {showIndexes.includes(index) && <IconComponent />}
+          </Box>
+        );
+      })}
     </div>
-  `,
-  document.body
-);
+  );
+}

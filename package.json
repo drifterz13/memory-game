@@ -1,0 +1,17 @@
+{
+	"scripts": {
+		"start": "wmr",
+		"build": "wmr build --prerender",
+		"serve": "wmr serve"
+	},
+	"alias": {
+		"react": "preact/compat",
+		"react-dom": "preact/compat"
+	},
+	"devDependencies": {
+		"wmr": "^1.0.0"
+	},
+	"dependencies": {
+		"preact": "^10.5.7"
+	}
+}
