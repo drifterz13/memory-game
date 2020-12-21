@@ -1,0 +1,12 @@
+.box {
+  border-radius: 4px;
+  width: 126px;
+  height: 126px;
+  color: #222;
+  font-weight: bold;
+  font-size: 24px;
+  background: greenyellow;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}

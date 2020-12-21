@@ -1,9 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import { Box } from "./Box";
-
+import Box from "./Box";
+import styles from "./board-layout.module.css";
 import { icons } from "../icons/index";
 
-export function BoardLayout() {
+export default function BoardLayout() {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
     const count = {};
@@ -82,16 +82,18 @@ export function BoardLayout() {
   };
 
   return (
-    <div class="board-layout">
-      {items.map((item, index) => {
-        const IconComponent = icons[item];
+    <div class={styles.container}>
+      <div class={styles.board}>
+        {items.map((item, index) => {
+          const IconComponent = icons[item];
 
-        return (
-          <Box onClick={() => guess(index)}>
-            {showIndexes.includes(index) && <IconComponent />}
-          </Box>
-        );
-      })}
+          return (
+            <Box onClick={() => guess(index)}>
+              {showIndexes.includes(index) && <IconComponent />}
+            </Box>
+          );
+        })}
+      </div>
     </div>
   );
 }
