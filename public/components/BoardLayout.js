@@ -1,5 +1,5 @@
 import { useState, useEffect } from "preact/hooks";
-import { Box } from "./Board";
+import { Box } from "./Box";
 
 import { icons } from "../icons/index";
 
