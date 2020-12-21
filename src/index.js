@@ -14,104 +14,86 @@ const Box = (props) => {
 const BoardLayout = () => {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
-    const itemCountMap = {};
+    const count = {};
     const keyMap = {};
     for (const [index, key] of itemKeys.entries()) {
       keyMap[index] = key;
-      itemCountMap[key] = 0;
+      count[key] = 0;
     }
     const shuffledItems = [];
 
-    for (let i = 0; i < 16; i++) {
-      let rand = Math.floor(Math.random() * itemKeys.length - 1 + 1);
-      let item = keyMap[rand];
+    const updateItem = () => {
+      const r = Math.floor(Math.random() * itemKeys.length);
+      const item = keyMap[r];
 
-      if (itemCountMap[item] === 2) {
-        for (;;) {
-          rand = Math.floor(Math.random() * itemKeys.length - 1 + 1);
-          item = keyMap[rand];
-          if (itemCountMap[item] < 2) {
-            shuffledItems.push(item);
-            itemCountMap[item] += 1;
-            break;
-          }
-        }
-        continue;
+      if (count[item] === 2) {
+        return updateItem();
       }
       shuffledItems.push(item);
-      itemCountMap[item] += 1;
+      count[item] += 1;
+    };
+
+    for (let i = 0; i < itemKeys.length * 2; i++) {
+      updateItem();
     }
     return shuffledItems;
   };
 
   const [items, setItems] = useState(initialState);
-  const [guessItems, setGuessItems] = useState([]);
-  const [showItems, setShowItems] = useState(new Set());
+  const [guessIndexes, setGuessIndexes] = useState([]);
+  const [showIndexes, setShowIndexes] = useState([]);
   const [computing, setComputing] = useState(false);
 
   const DELAY = 500;
 
   const reset = () => {
-    setShowItems(new Set());
+    setShowIndexes([]);
     setItems(initialState);
-    setGuessItems([]);
+    setGuessIndexes([]);
   };
 
   useEffect(() => {
-    if (guessItems.length === 2) {
-      const item1 = items[guessItems[0]];
-      const item2 = items[guessItems[1]];
+    if (guessIndexes.length === 2) {
+      const item1 = items[guessIndexes[0]];
+      const item2 = items[guessIndexes[1]];
       if (item1 === item2) {
-        console.log("matched");
-        if (showItems.size === items.length) {
+        if (showIndexes.length === items.length) {
           alert("You win!");
           reset();
           return;
         }
-        setShowItems((state) => {
-          let newState = state;
-          newState.add(guessItems[0]);
-          newState.add(guessItems[1]);
-          return new Set(newState);
-        });
       } else {
-        console.log("not matched");
         setComputing(true);
         setTimeout(() => {
-          setShowItems((state) => {
-            let newState = state;
-            newState.delete(guessItems[0]);
-            newState.delete(guessItems[1]);
-            return new Set(newState);
-          });
+          setShowIndexes((state) =>
+            state.filter(
+              (idx) => idx !== guessIndexes[0] && idx !== guessIndexes[1]
+            )
+          );
           setComputing(false);
         }, DELAY);
       }
-      setGuessItems([]);
+      setGuessIndexes([]);
       return;
     }
-  }, [guessItems, showItems]);
+  }, [guessIndexes, showIndexes]);
 
   const guess = (index) => {
     if (computing) {
       return;
     }
-    if (showItems.has(index)) {
+    if (showIndexes.includes(index)) {
       return;
     }
-    setGuessItems((state) => [...state, index]);
-    setShowItems((state) => {
-      const newState = state;
-      newState.add(index);
-      return new Set(newState);
-    });
+    setGuessIndexes((state) => [...state, index]);
+    setShowIndexes((state) => [...state, index]);
   };
 
   return html`
     <div class="board-layout">
       ${items.map(
         (item, index) => html` <${Box} onClick=${() => guess(index)}>
-          ${showItems.has(index) && html` <${icons[item]} /> `}
+          ${showIndexes.includes(index) && html` <${icons[item]} /> `}
         <//>`
       )}
     </div>
@@ -120,6 +102,9 @@ const BoardLayout = () => {
 
 render(
   html`
+    <section class="header-section">
+      <h1>Silly Brain 🧠🦕</h1>
+    </section>
     <div class="board-layout-container">
       <${BoardLayout} />
     </div>
