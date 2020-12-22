@@ -1,6 +1,7 @@
 import { render, h } from "preact";
 import { useState } from "preact/hooks";
 import { setup } from "goober";
+
 import BoardLayout from "./components/BoardLayout";
 import Header from "./components/Header";
 import TimeTracking from "./components/TimeTracking";
