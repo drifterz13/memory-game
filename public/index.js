@@ -1,13 +1,13 @@
-import { render, Fragment } from "preact";
+import { render } from "preact";
 import BoardLayout from "./components/BoardLayout";
 import Header from "./components/Header";
 
 export function App() {
   return (
-    <Fragment>
+    <div class="app-container">
       <Header />
       <BoardLayout />
-    </Fragment>
+    </div>
   );
 }
 
