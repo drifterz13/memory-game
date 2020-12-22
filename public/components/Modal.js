@@ -82,16 +82,20 @@ export default function Modal(props) {
         <Description>{props.description}</Description>
         {props.onConfirm && props.onCancel ? (
           <Row>
-            <ConfirmButton>Ok</ConfirmButton>
-            <CancelButton>Cancel</CancelButton>
+            <ConfirmButton onClick={props.onConfirm}>Ok</ConfirmButton>
+            <CancelButton onClick={props.onCancel}>Cancel</CancelButton>
           </Row>
         ) : props.onConfirm ? (
           <div>
-            <ConfirmButton fullWidth>Ok</ConfirmButton>
+            <ConfirmButton fullWidth onClick={props.onConfirm}>
+              Ok
+            </ConfirmButton>
           </div>
         ) : props.onCancel ? (
           <div>
-            <CancelButton fullWidth>Cancel</CancelButton>
+            <CancelButton fullWidth onClick={props.onCancel}>
+              Cancel
+            </CancelButton>
           </div>
         ) : null}
       </ModalContent>
