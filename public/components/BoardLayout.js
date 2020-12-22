@@ -1,8 +1,10 @@
+import { Fragment } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { styled } from "goober";
 
 import Box from "./Box";
 import { icons } from "../icons/index";
+import Modal from "./Modal";
 
 export default function BoardLayout(props) {
   const initialState = () => {
@@ -36,6 +38,7 @@ export default function BoardLayout(props) {
   const [guessIndexes, setGuessIndexes] = useState([]);
   const [showIndexes, setShowIndexes] = useState([]);
   const [computing, setComputing] = useState(false);
+  const [showWinModal, setShowWindModal] = useState(false);
 
   const DELAY = 500;
 
@@ -52,7 +55,7 @@ export default function BoardLayout(props) {
       if (item1 === item2) {
         if (showIndexes.length === items.length) {
           props.stop();
-          alert("You win!");
+          setShowWindModal(true);
           reset();
           return;
         }
@@ -84,23 +87,32 @@ export default function BoardLayout(props) {
   };
 
   return (
-    <BoardContainer>
-      <Board started={props.started}>
-        {props.started ? (
-          items.map((item, index) => {
-            const IconComponent = icons[item];
+    <Fragment>
+      <BoardContainer>
+        <Board started={props.started}>
+          {props.started ? (
+            items.map((item, index) => {
+              const IconComponent = icons[item];
 
-            return (
-              <Box onClick={() => guess(index)}>
-                {showIndexes.includes(index) && <IconComponent />}
-              </Box>
-            );
-          })
-        ) : (
-          <StartButton onClick={props.start}>Start Game</StartButton>
-        )}
-      </Board>
-    </BoardContainer>
+              return (
+                <Box onClick={() => guess(index)}>
+                  {showIndexes.includes(index) && <IconComponent />}
+                </Box>
+              );
+            })
+          ) : (
+            <StartButton onClick={props.start}>Start Game</StartButton>
+          )}
+        </Board>
+      </BoardContainer>
+      {showWinModal && (
+        <Modal
+          heading="You win! 🏆"
+          description="Congratulations!"
+          onConfirm={() => setShowWindModal(false)}
+        />
+      )}
+    </Fragment>
   );
 }
 
