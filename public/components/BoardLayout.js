@@ -142,4 +142,9 @@ const StartButton = styled("button")`
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
+
+  @media only screen and (max-width: 768px) {
+    padding: 0.75em;
+    font-size: 18px;
+  }
 `;
