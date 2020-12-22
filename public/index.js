@@ -16,7 +16,7 @@ export function App() {
     <div class="app-container">
       <Header />
       <TimeTracking started={started} />
-      <BoardLayout started={started} start={start} />
+      <BoardLayout started={started} start={start} stop={stop} />
     </div>
   );
 }

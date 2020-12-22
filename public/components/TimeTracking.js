@@ -4,9 +4,16 @@ import { useState, useEffect, useRef } from "preact/hooks";
 export default function TimeTracking(props) {
   const [time, setTime] = useState(60); // one minute
   const timeRef = useRef();
-
+  
   useEffect(() => {
     const cleanup = () => clearInterval(timeRef.current);
+
+    if (props.started === false && timeRef.current) {
+      cleanup()
+      timeRef.current = undefined
+      console.log(`Time spent: ${60 - time}s`)
+      return
+    }
 
     if (props.started) {
       timeRef.current = setInterval(() => {
