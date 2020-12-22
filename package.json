@@ -12,6 +12,7 @@
 		"wmr": "^1.0.0"
 	},
 	"dependencies": {
+		"goober": "^2.0.19-next.1",
 		"preact": "^10.5.7"
 	}
 }

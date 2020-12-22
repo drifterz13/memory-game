@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+goober@^2.0.19-next.1:
+  version "2.0.19-next.1"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.0.19-next.1.tgz#6881ffba6346ed8cabc0872981771de791f855b3"
+  integrity sha512-1HlFxG2rYS6cag21p7stYv5f+sa0CQm8TCegcMIffBKDmfN30tLpCN0op4pDh2Xo34pwLe7PFYF6ZZRqovRX5A==
+
 preact@^10.5.7:
   version "10.5.7"
   resolved "https://registry.yarnpkg.com/preact/-/preact-10.5.7.tgz#f1d84725539e18f7ccbea937cf3db5895661dbd3"
