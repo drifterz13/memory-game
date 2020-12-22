@@ -1,9 +1,10 @@
 import { useState, useEffect } from "preact/hooks";
+import { styled } from "goober";
+
 import Box from "./Box";
-import styles from "./board-layout.module.css";
 import { icons } from "../icons/index";
 
-export default function BoardLayout() {
+export default function BoardLayout(props) {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
     const count = {};
@@ -82,18 +83,62 @@ export default function BoardLayout() {
   };
 
   return (
-    <div class={styles.container}>
-      <div class={styles.board}>
-        {items.map((item, index) => {
-          const IconComponent = icons[item];
+    <BoardContainer>
+      <Board started={props.started}>
+        {props.started ? (
+          items.map((item, index) => {
+            const IconComponent = icons[item];
 
-          return (
-            <Box onClick={() => guess(index)}>
-              {showIndexes.includes(index) && <IconComponent />}
-            </Box>
-          );
-        })}
-      </div>
-    </div>
+            return (
+              <Box onClick={() => guess(index)}>
+                {showIndexes.includes(index) && <IconComponent />}
+              </Box>
+            );
+          })
+        ) : (
+          <StartButton onClick={props.start}>Start Game</StartButton>
+        )}
+      </Board>
+    </BoardContainer>
   );
 }
+
+const BoardContainer = styled("div")`
+  padding: 2em;
+  background: slateblue;
+  width: 600px;
+  height: 600px;
+  border-radius: 4px;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 768px) {
+    width: 300px;
+    height: 300px;
+    padding: 1em;
+  }
+`;
+
+const Board = styled("div")`
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.started ? "repeat(4, 1fr)" : "1fr"};
+  grid-template-rows: ${(props) => (props.started ? "repeat(4, 1fr)" : "1fr")};
+  place-items: center;
+  gap: 2em;
+  width: 100%;
+  height: 100%;
+
+  @media only screen and (max-width: 768px) {
+    gap: 1em;
+  }
+`;
+
+const StartButton = styled("button")`
+  text-align: center;
+  padding: 1em;
+  font-size: 32px;
+  background: honeydew;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+`;

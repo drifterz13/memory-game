@@ -1,3 +1,7 @@
+* {
+  font-family: monospace;
+}
+
 .app-container {
   position: absolute;
   left: 0;

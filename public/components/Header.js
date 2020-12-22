@@ -1,9 +1,19 @@
-import styles from './header.module.css'
+import { styled } from "goober";
 
 export default function Header() {
   return (
-    <div class={styles.header}>
+    <StyledHeader>
       <h1>Silly Brain 🧠🦕</h1>
-    </div>
+    </StyledHeader>
   );
 }
+
+const StyledHeader = styled("div")`
+  text-align: center;
+  font-size: x-large;
+
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    font-size: medium;
+  }
+`;
