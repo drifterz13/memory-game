@@ -1,11 +1,7 @@
 import { styled } from "goober";
 
 export default function Box({ onClick, children }) {
-  return (
-    <StyledBox onClick={onClick}>
-      {children}
-    </StyledBox>
-  );
+  return <StyledBox onClick={onClick}>{children}</StyledBox>;
 }
 
 const StyledBox = styled("div")`

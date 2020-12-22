@@ -51,7 +51,7 @@ export default function BoardLayout(props) {
       const item2 = items[guessIndexes[1]];
       if (item1 === item2) {
         if (showIndexes.length === items.length) {
-          props.stop()
+          props.stop();
           alert("You win!");
           reset();
           return;
