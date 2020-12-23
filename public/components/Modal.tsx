@@ -58,7 +58,6 @@ const XContainer = styled("div")`
 `;
 
 const XText = styled("span")`
-  color: red;
   padding: 4px;
   font-weight: bold;
   font-size: larger;
@@ -78,7 +77,7 @@ export default function Modal(props: Props) {
     <ModalContainer>
       <ModalContent>
         <XContainer>
-          <XText onClick={props.onClose}>X</XText>
+          <XText onClick={props.onClose}>❌</XText>
         </XContainer>
         <Heading>{props.heading}</Heading>
         <Description>{props.description}</Description>
