@@ -10,6 +10,7 @@ setup(h);
 
 export function App() {
   const [started, setStarted] = useState(false);
+  const [timeSpent, setTimeSpent] = useState(0);
 
   const start = () => setStarted(true);
   const stop = () => setStarted(false);
@@ -17,8 +18,13 @@ export function App() {
   return (
     <div class="app-container">
       <Header />
-      <TimeTracking started={started} />
-      <BoardLayout started={started} start={start} stop={stop} />
+      <TimeTracking started={started} setTimeSpent={setTimeSpent} />
+      <BoardLayout
+        started={started}
+        start={start}
+        stop={stop}
+        timeSpent={timeSpent}
+      />
     </div>
   );
 }

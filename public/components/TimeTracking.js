@@ -11,6 +11,7 @@ export default function TimeTracking(props) {
     if (props.started === false && timeRef.current) {
       cleanup();
       timeRef.current = undefined;
+      props.setTimeSpent(60 - time)
       console.log(`Time spent: ${60 - time}s`);
       return;
     }
@@ -18,6 +19,7 @@ export default function TimeTracking(props) {
     if (props.started) {
       timeRef.current = setInterval(() => {
         if (time === 0) {
+          props.setTimeSpent(60)
           cleanup();
           return;
         }

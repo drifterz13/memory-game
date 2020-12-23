@@ -6,6 +6,51 @@ import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
 
+const BoardContainer = styled("div")`
+  padding: 2em;
+  background: slateblue;
+  width: 600px;
+  height: 600px;
+  border-radius: 4px;
+  margin: 0 auto;
+
+  @media only screen and (max-width: 768px) {
+    width: 300px;
+    height: 300px;
+    padding: 1em;
+  }
+`;
+
+const Board = styled("div")`
+  display: grid;
+  grid-template-columns: ${(props) =>
+    props.started ? "repeat(4, 1fr)" : "1fr"};
+  grid-template-rows: ${(props) => (props.started ? "repeat(4, 1fr)" : "1fr")};
+  place-items: center;
+  gap: 2em;
+  width: 100%;
+  height: 100%;
+
+  @media only screen and (max-width: 768px) {
+    gap: 1em;
+  }
+`;
+
+const StartButton = styled("button")`
+  text-align: center;
+  padding: 1em;
+  font-size: 32px;
+  background: honeydew;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+
+  @media only screen and (max-width: 768px) {
+    padding: 0.75em;
+    font-size: 18px;
+  }
+`;
+
 export default function BoardLayout(props) {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
@@ -108,55 +153,10 @@ export default function BoardLayout(props) {
       {showWinModal && (
         <Modal
           heading="You win! 🏆"
-          description="Congratulations!"
+          description={`Time spent: ${props.timeSpent}s`}
           onConfirm={() => setShowWindModal(false)}
         />
       )}
     </Fragment>
   );
 }
-
-const BoardContainer = styled("div")`
-  padding: 2em;
-  background: slateblue;
-  width: 600px;
-  height: 600px;
-  border-radius: 4px;
-  margin: 0 auto;
-
-  @media only screen and (max-width: 768px) {
-    width: 300px;
-    height: 300px;
-    padding: 1em;
-  }
-`;
-
-const Board = styled("div")`
-  display: grid;
-  grid-template-columns: ${(props) =>
-    props.started ? "repeat(4, 1fr)" : "1fr"};
-  grid-template-rows: ${(props) => (props.started ? "repeat(4, 1fr)" : "1fr")};
-  place-items: center;
-  gap: 2em;
-  width: 100%;
-  height: 100%;
-
-  @media only screen and (max-width: 768px) {
-    gap: 1em;
-  }
-`;
-
-const StartButton = styled("button")`
-  text-align: center;
-  padding: 1em;
-  font-size: 32px;
-  background: honeydew;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-
-  @media only screen and (max-width: 768px) {
-    padding: 0.75em;
-    font-size: 18px;
-  }
-`;
