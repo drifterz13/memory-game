@@ -8,7 +8,7 @@ const ModalContainer = styled("div")`
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  display: grid;
+  display: flex;
 `;
 
 const ModalContent = styled("div")`
