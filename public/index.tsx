@@ -6,20 +6,20 @@ import BoardLayout from "./components/BoardLayout";
 import Header from "./components/Header";
 import TimeTracking from "./components/TimeTracking";
 
-import { NOT_STARTED, STARTED, WIN, LOSE } from "./type";
+import { NOT_STARTED, STARTED, WIN, LOSE, GameStatus } from "./type";
 
 setup(h);
 
 export function App() {
   const [timeSpent, setTimeSpent] = useState(0);
 
-  const [status, setStatus] = useState(NOT_STARTED);
+  const [status, setStatus] = useState<GameStatus>(NOT_STARTED);
   const setLose = () => setStatus(LOSE);
   const setWin = () => setStatus(WIN);
   const startGame = () => setStatus(STARTED);
   const restart = () => {
-    setStatus(NOT_STARTED)
-    setTimeSpent(0)
+    setStatus(NOT_STARTED);
+    setTimeSpent(0);
   };
 
   useEffect(() => {
@@ -27,8 +27,6 @@ export function App() {
       setLose();
     }
   }, [timeSpent]);
-
-  console.log('STATUS', status)
 
   return (
     <div class="app-container">

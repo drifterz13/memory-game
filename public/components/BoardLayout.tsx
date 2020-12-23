@@ -5,7 +5,7 @@ import { styled } from "goober";
 import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
-import { LOSE, STARTED, WIN } from "../type";
+import { GameStatus, LOSE, STARTED, WIN } from "../type";
 
 const BoardContainer = styled("div")`
   padding: 2em;
@@ -57,16 +57,24 @@ const StartButton = styled("button")`
   }
 `;
 
-export default function BoardLayout(props) {
+type Props = {
+  status: GameStatus;
+  start: () => void;
+  setWin: () => void;
+  restart: () => void;
+  timeSpent: number;
+};
+
+export default function BoardLayout(props: Props) {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
-    const count = {};
-    const keyMap = {};
+    const count: { [key: string]: number } = {};
+    const keyMap: { [key: string]: string } = {};
     for (const [index, key] of itemKeys.entries()) {
       keyMap[index] = key;
       count[key] = 0;
     }
-    const shuffledItems = [];
+    const shuffledItems: string[] = [];
 
     const updateItem = () => {
       const r = Math.floor(Math.random() * itemKeys.length);
@@ -86,8 +94,8 @@ export default function BoardLayout(props) {
   };
 
   const [items, setItems] = useState(initialState);
-  const [guessIndexes, setGuessIndexes] = useState([]);
-  const [showIndexes, setShowIndexes] = useState([]);
+  const [guessIndexes, setGuessIndexes] = useState<number[]>([]);
+  const [showIndexes, setShowIndexes] = useState<number[]>([]);
   const [computing, setComputing] = useState(false);
 
   const DELAY = 500;
@@ -124,7 +132,7 @@ export default function BoardLayout(props) {
     }
   }, [guessIndexes, showIndexes]);
 
-  const guess = (index) => {
+  const guess = (index: number) => {
     if (computing) {
       return;
     }

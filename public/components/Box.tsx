@@ -1,7 +1,13 @@
 import { styled } from "goober";
+import type { ComponentChildren } from "preact";
 
-export default function Box({ onClick, children }) {
-  return <StyledBox onClick={onClick}>{children}</StyledBox>;
+type Props = {
+  children?: ComponentChildren;
+  onClick: () => void;
+};
+
+export default function Box(props: Props) {
+  return <StyledBox onClick={props.onClick}>{props.children}</StyledBox>;
 }
 
 const StyledBox = styled("div")`

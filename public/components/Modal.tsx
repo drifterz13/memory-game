@@ -1,4 +1,5 @@
 import { styled } from "goober";
+import { VNode } from "preact";
 
 const ModalContainer = styled("div")`
   position: absolute;
@@ -64,7 +65,15 @@ const XText = styled("span")`
   cursor: pointer;
 `;
 
-export default function Modal(props) {
+type Props = {
+  heading: string | VNode<any>;
+  description: string | VNode<any>;
+  onClose: () => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+};
+
+export default function Modal(props: Props) {
   return (
     <ModalContainer>
       <ModalContent>

@@ -1,6 +1,6 @@
 import { styled } from "goober";
 import { useState, useEffect, useRef } from "preact/hooks";
-import { NOT_STARTED, STARTED, WIN } from "../type";
+import { GameStatus, NOT_STARTED, STARTED, WIN } from "../type";
 
 const TimeTrackingText = styled("p")`
   text-align: center;
@@ -8,9 +8,14 @@ const TimeTrackingText = styled("p")`
   font-size: larger;
 `;
 
-export default function TimeTracking(props) {
+type Props = {
+  status: GameStatus;
+  setTimeSpent: (time: number) => void;
+};
+
+export default function TimeTracking(props: Props) {
   const [time, setTime] = useState(60); // one minute
-  const timeRef = useRef();
+  const timeRef = useRef<any>();
 
   useEffect(() => {
     const cleanup = () => clearInterval(timeRef.current);
