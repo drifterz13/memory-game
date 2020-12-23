@@ -5,6 +5,7 @@ import { styled } from "goober";
 import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
+import { LOSE, STARTED, WIN } from "../type";
 
 const BoardContainer = styled("div")`
   padding: 2em;
@@ -24,8 +25,13 @@ const BoardContainer = styled("div")`
 const Board = styled("div")`
   display: grid;
   grid-template-columns: ${(props) =>
-    props.started ? "repeat(4, 1fr)" : "1fr"};
-  grid-template-rows: ${(props) => (props.started ? "repeat(4, 1fr)" : "1fr")};
+    props.status === STARTED || props.status === LOSE
+      ? "repeat(4, 1fr)"
+      : "1fr"};
+  grid-template-rows: ${(props) =>
+    props.status === STARTED || props.status === LOSE
+      ? "repeat(4, 1fr)"
+      : "1fr"};
   place-items: center;
   gap: 2em;
   width: 100%;
@@ -83,11 +89,11 @@ export default function BoardLayout(props) {
   const [guessIndexes, setGuessIndexes] = useState([]);
   const [showIndexes, setShowIndexes] = useState([]);
   const [computing, setComputing] = useState(false);
-  const [showWinModal, setShowWindModal] = useState(false);
 
   const DELAY = 500;
 
   const reset = () => {
+    props.restart()
     setShowIndexes([]);
     setItems(initialState);
     setGuessIndexes([]);
@@ -99,9 +105,7 @@ export default function BoardLayout(props) {
       const item2 = items[guessIndexes[1]];
       if (item1 === item2) {
         if (showIndexes.length === items.length) {
-          props.stop();
-          setShowWindModal(true);
-          reset();
+          props.setWin();
           return;
         }
       } else {
@@ -134,8 +138,8 @@ export default function BoardLayout(props) {
   return (
     <Fragment>
       <BoardContainer>
-        <Board started={props.started}>
-          {props.started ? (
+        <Board status={props.status}>
+          {props.status === STARTED || props.status === LOSE ? (
             items.map((item, index) => {
               const IconComponent = icons[item];
 
@@ -150,11 +154,18 @@ export default function BoardLayout(props) {
           )}
         </Board>
       </BoardContainer>
-      {showWinModal && (
+      {props.status === LOSE && (
+        <Modal
+          heading="You lose! 😭"
+          description={`Don't give up. Try it again!`}
+          onCancel={reset}
+        />
+      )}
+      {props.status === WIN && (
         <Modal
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}
-          onConfirm={() => setShowWindModal(false)}
+          onConfirm={reset}
         />
       )}
     </Fragment>

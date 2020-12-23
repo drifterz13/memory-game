@@ -94,7 +94,7 @@ export default function Modal(props) {
         ) : props.onCancel ? (
           <div>
             <CancelButton fullWidth onClick={props.onCancel}>
-              Cancel
+              Close
             </CancelButton>
           </div>
         ) : null}

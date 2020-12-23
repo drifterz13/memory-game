@@ -1,5 +1,12 @@
 import { styled } from "goober";
 import { useState, useEffect, useRef } from "preact/hooks";
+import { NOT_STARTED, STARTED, WIN } from "../type";
+
+const TimeTrackingText = styled("p")`
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
+`;
 
 export default function TimeTracking(props) {
   const [time, setTime] = useState(60); // one minute
@@ -8,18 +15,22 @@ export default function TimeTracking(props) {
   useEffect(() => {
     const cleanup = () => clearInterval(timeRef.current);
 
-    if (props.started === false && timeRef.current) {
-      cleanup();
-      timeRef.current = undefined;
-      props.setTimeSpent(60 - time)
-      console.log(`Time spent: ${60 - time}s`);
+    if (props.status === NOT_STARTED) {
+      setTime(60);
       return;
     }
 
-    if (props.started) {
+    if (props.status === WIN) {
+      props.setTimeSpent(60 - time);
+      console.log(`Time spent: ${60 - time}s`);
+      cleanup();
+      return;
+    }
+
+    if (props.status === STARTED) {
       timeRef.current = setInterval(() => {
         if (time === 0) {
-          props.setTimeSpent(60)
+          props.setTimeSpent(60);
           cleanup();
           return;
         }
@@ -28,19 +39,13 @@ export default function TimeTracking(props) {
     }
 
     return cleanup;
-  }, [props.started, time]);
+  }, [props.status, time]);
 
   return (
     <div>
       <TimeTrackingText>
-        {props.started ? `${time} s` : "not started."}
+        {props.status == NOT_STARTED ? "not started." : `${time} s`}
       </TimeTrackingText>
     </div>
   );
 }
-
-const TimeTrackingText = styled("p")`
-  text-align: center;
-  font-weight: bold;
-  font-size: larger;
-`;
