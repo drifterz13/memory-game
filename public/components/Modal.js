@@ -1,5 +1,4 @@
 import { styled } from "goober";
-import { useState } from "preact/hooks";
 
 const ModalContainer = styled("div")`
   position: absolute;
@@ -66,17 +65,11 @@ const XText = styled("span")`
 `;
 
 export default function Modal(props) {
-  const [show, setShow] = useState(true);
-
-  if (!show) {
-    return null;
-  }
-
   return (
     <ModalContainer>
       <ModalContent>
         <XContainer>
-          <XText onClick={() => setShow(false)}>X</XText>
+          <XText onClick={props.onClose}>X</XText>
         </XContainer>
         <Heading>{props.heading}</Heading>
         <Description>{props.description}</Description>

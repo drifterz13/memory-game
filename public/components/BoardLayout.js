@@ -93,7 +93,7 @@ export default function BoardLayout(props) {
   const DELAY = 500;
 
   const reset = () => {
-    props.restart()
+    props.restart();
     setShowIndexes([]);
     setItems(initialState);
     setGuessIndexes([]);
@@ -159,6 +159,7 @@ export default function BoardLayout(props) {
           heading="You lose! 😭"
           description={`Don't give up. Try it again!`}
           onCancel={reset}
+          onClose={reset}
         />
       )}
       {props.status === WIN && (
@@ -166,6 +167,7 @@ export default function BoardLayout(props) {
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}
           onConfirm={reset}
+          onClose={reset}
         />
       )}
     </Fragment>
