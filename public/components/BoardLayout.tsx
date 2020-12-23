@@ -6,6 +6,7 @@ import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
 import { GameStatus, LOSE, STARTED, WIN } from "../type";
+import StartSection from "./StartSection";
 
 const BoardContainer = styled("div")`
   padding: 2em;
@@ -39,21 +40,6 @@ const Board = styled("div")`
 
   @media only screen and (max-width: 768px) {
     gap: 1em;
-  }
-`;
-
-const StartButton = styled("button")`
-  text-align: center;
-  padding: 1em;
-  font-size: 32px;
-  background: honeydew;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
-
-  @media only screen and (max-width: 768px) {
-    padding: 0.75em;
-    font-size: 18px;
   }
 `;
 
@@ -158,7 +144,7 @@ export default function BoardLayout(props: Props) {
               );
             })
           ) : (
-            <StartButton onClick={props.start}>Start Game</StartButton>
+            <StartSection start={props.start} />
           )}
         </Board>
       </BoardContainer>
