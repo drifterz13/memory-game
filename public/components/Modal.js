@@ -35,34 +35,34 @@ const Row = styled("div")`
   column-gap: 1em;
 `;
 
-const ConfirmButton = styled("button")`
+const ModalButton = styled("button")`
   padding: 0.5em;
+  font-size: x-large;
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  cursor: pointer;
+`;
+
+const ConfirmButton = styled(ModalButton)`
   color: white;
   background: slateblue;
-  font-size: x-large;
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
-  cursor: pointer;
 `;
 
-const CancelButton = styled("button")`
-  padding: 0.5em;
+const CancelButton = styled(ModalButton)`
   color: black;
   background: darkgrey;
-  font-size: x-large;
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
-  cursor: pointer;
 `;
 
-const XButton = styled("div")`
+const XContainer = styled("div")`
   display: grid;
   place-items: end;
-  > span {
-    color: red;
-    padding: 4px;
-    font-weight: bold;
-    font-size: larger;
-    cursor: pointer;
-  }
+`;
+
+const XText = styled("span")`
+  color: red;
+  padding: 4px;
+  font-weight: bold;
+  font-size: larger;
+  cursor: pointer;
 `;
 
 export default function Modal(props) {
@@ -75,9 +75,9 @@ export default function Modal(props) {
   return (
     <ModalContainer>
       <ModalContent>
-        <XButton>
-          <span onClick={() => setShow(false)}>X</span>
-        </XButton>
+        <XContainer>
+          <XText onClick={() => setShow(false)}>X</XText>
+        </XContainer>
         <Heading>{props.heading}</Heading>
         <Description>{props.description}</Description>
         {props.onConfirm && props.onCancel ? (
