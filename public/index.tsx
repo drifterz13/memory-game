@@ -1,45 +1,30 @@
 import { render, h } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { LocationProvider, Router } from "preact-iso/router";
+import lazy, { ErrorBoundary } from "preact-iso/lazy";
 import { setup } from "goober";
 
-import BoardLayout from "./components/BoardLayout";
-import Header from "./components/Header";
-import TimeTracking from "./components/TimeTracking";
+import Navbar from "./components/Navbar";
+import Game from "./pages/Game";
+import NotFound from "./pages/NotFound";
 
-import { NOT_STARTED, STARTED, WIN, LOSE, GameStatus } from "./type";
+const Rank = lazy(() => import("./pages/Rank"));
 
 setup(h);
 
 export function App() {
-  const [timeSpent, setTimeSpent] = useState(0);
-
-  const [status, setStatus] = useState<GameStatus>(NOT_STARTED);
-  const setLose = () => setStatus(LOSE);
-  const setWin = () => setStatus(WIN);
-  const startGame = () => setStatus(STARTED);
-  const restart = () => {
-    setStatus(NOT_STARTED);
-    setTimeSpent(0);
-  };
-
-  useEffect(() => {
-    if (timeSpent === 60) {
-      setLose();
-    }
-  }, [timeSpent]);
-
   return (
-    <div class="app-container">
-      <Header />
-      <TimeTracking status={status} setTimeSpent={setTimeSpent} />
-      <BoardLayout
-        status={status}
-        start={startGame}
-        setWin={setWin}
-        restart={restart}
-        timeSpent={timeSpent}
-      />
-    </div>
+    <LocationProvider>
+      <div class="app-container">
+        <Navbar />
+        <ErrorBoundary>
+          <Router>
+            <Game path="/" />
+            <Rank path="/rank" />
+            <NotFound default />
+          </Router>
+        </ErrorBoundary>
+      </div>
+    </LocationProvider>
   );
 }
 
