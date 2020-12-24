@@ -40,6 +40,7 @@ export default function Game() {
       if (updating) {
         return;
       }
+      setUpdating(true)
       updateRank({ rank: { name, time_spent: timeSpent } }).then(() => {
         setUpdating(false);
       });
