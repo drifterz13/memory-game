@@ -146,13 +146,11 @@ export default function BoardLayout(props: Props) {
         <Board status={props.status}>
           {props.status === STARTED || props.status === LOSE
             ? items.map((item, index) => {
-                const animalSVG = animalIcons[item];
+                const AnimalIcon = animalIcons[item];
 
                 return (
                   <Box onClick={() => guess(index)}>
-                    {showIndexes.includes(index) && (
-                      <img src={animalSVG} alt={item} />
-                    )}
+                    {showIndexes.includes(index) && <AnimalIcon />}
                   </Box>
                 );
               })

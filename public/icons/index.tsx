@@ -1,21 +1,23 @@
-import BearSVG from "./animal/bear.svg";
-import DeerSVG from "./animal/deer.svg";
-import DogSVG from "./animal/dog.svg";
-import FoxSVG from "./animal/fox.svg";
-import GorillaSVG from "./animal/gorilla.svg";
-import HedgeHogSVG from "./animal/hedgehog.svg";
-import LionSVG from "./animal/lion.svg";
-import MonkeySVG from "./animal/monkey.svg";
-import OrangutanSVG from "./animal/orangutan.svg";
-import PandaSVG from "./animal/panda.svg";
-import PigSVG from "./animal/pig.svg";
-import PolarBearSVG from "./animal/polar_bear.svg";
-import SlothSVG from "./animal/sloth.svg";
-import TigerSVG from "./animal/tiger.svg";
-import UnicornSVG from "./animal/unicorn.svg";
-import WolfSVG from "./animal/wolf.svg";
+import { ComponentChildren } from "preact";
 
-export const animalIcons = {
+import BearSVG from "./animal/bear";
+import DeerSVG from "./animal/deer";
+import DogSVG from "./animal/dog";
+import FoxSVG from "./animal/fox";
+import GorillaSVG from "./animal/gorilla";
+import HedgeHogSVG from "./animal/hedgehog";
+import LionSVG from "./animal/lion";
+import MonkeySVG from "./animal/monkey";
+import OrangutanSVG from "./animal/orangutan";
+import PandaSVG from "./animal/panda";
+import PigSVG from "./animal/pig";
+import PolarBearSVG from "./animal/polar_bear";
+import SlothSVG from "./animal/sloth";
+import TigerSVG from "./animal/tiger";
+import UnicornSVG from "./animal/unicorn";
+import WolfSVG from "./animal/wolf";
+
+export const animalIcons: { [key: string]: () => ComponentChildren } = {
   bear: BearSVG,
   deer: DeerSVG,
   dog: DogSVG,
