@@ -19,6 +19,7 @@ export default function Game() {
   const [name, setName] = useState("");
   const [timeSpent, setTimeSpent] = useState(0);
   const [, updateRank] = useMutation(UpdateRank);
+  const [updating, setUpdating] = useState(false);
 
   const [status, setStatus] = useState<GameStatus>(NOT_STARTED);
   const setLose = () => setStatus(LOSE);
@@ -33,9 +34,13 @@ export default function Game() {
   };
 
   useEffect(() => {
+    // TODO: Handle this case properly.
     if (status === WIN && timeSpent !== 0) {
-      updateRank({ rank: { name, time_spent: timeSpent } }).then((result) => {
-        console.log("RESULT", result);
+      if (updating) {
+        return;
+      }
+      updateRank({ rank: { name, time_spent: timeSpent } }).then(() => {
+        setUpdating(false);
       });
     }
   }, [status, timeSpent]);
