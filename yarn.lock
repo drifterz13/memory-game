@@ -2,10 +2,41 @@
 # yarn lockfile v1
 
 
+"@graphql-typed-document-node/core@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.0.tgz#0eee6373e11418bfe0b5638f654df7a4ca6a3950"
+  integrity sha512-wYn6r8zVZyQJ6rQaALBEln5B1pzxb9shV5Ef97kTvn6yVGrqyXVnDqnU24MXnFubR+rZjBY9NWuxX3FB2sTsjg==
+
+"@urql/core@^1.16.0":
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/@urql/core/-/core-1.16.1.tgz#a41487dd4436cbdc92fce714c6c1fc04315761d3"
+  integrity sha512-lcEMCS/rB+ug7jKSRDVZIsqNhZxRooTNa1kHfvSjJT2k4SXDyPmjNSfXBUJF2pDJmvv9EIKl9Tk0AF1CvG3Q/g==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.1.0"
+    wonka "^4.0.14"
+
+"@urql/preact@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@urql/preact/-/preact-1.4.3.tgz#1ba2a728590083207f2e57f2addb2437824f4892"
+  integrity sha512-VLiEDeBIPFkSHyhNHWBmYCq1O9IaTHoZhutDCWdoPuAM5GOUxDGv72dODM9COk/5eNpJVWvYvT8ExOR3rxqayw==
+  dependencies:
+    "@urql/core" "^1.16.0"
+    wonka "^4.0.14"
+
 goober@^2.0.19-next.1:
   version "2.0.19-next.1"
   resolved "https://registry.yarnpkg.com/goober/-/goober-2.0.19-next.1.tgz#6881ffba6346ed8cabc0872981771de791f855b3"
   integrity sha512-1HlFxG2rYS6cag21p7stYv5f+sa0CQm8TCegcMIffBKDmfN30tLpCN0op4pDh2Xo34pwLe7PFYF6ZZRqovRX5A==
+
+graphql@^15.4.0:
+  version "15.4.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.4.0.tgz#e459dea1150da5a106486ba7276518b5295a4347"
+  integrity sha512-EB3zgGchcabbsU9cFe1j+yxdzKQKAbGUWRb13DsrsMN1yyfmmIq+2+L5MqVWcDCE4V89R5AyUOi7sMOGxdsYtA==
+
+preact-iso@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/preact-iso/-/preact-iso-0.2.0.tgz#f7d00716b5e2cef72d9262199a9b44b7c35a9204"
+  integrity sha512-p8FJRt55aXpb2TAL3JsiTP1YJm7XqIXb8mf7LVrMNoQRHW0VvqXNvIFYmHOIJArGlIIOb2v1w9o6/edOnSQFvA==
 
 preact@^10.5.7:
   version "10.5.7"
@@ -16,3 +47,8 @@ wmr@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wmr/-/wmr-1.0.0.tgz#3e058597716228a13a570aa7e7aacc2a2b479e15"
   integrity sha512-e4skIObjY4V7tERFSTemBw2RXuj0eDpJEVqPggMtwFlDqeCGD1g7aS32ElEf+AfreF2hSAN/F1lB7j1PHUlBdw==
+
+wonka@^4.0.14:
+  version "4.0.15"
+  resolved "https://registry.yarnpkg.com/wonka/-/wonka-4.0.15.tgz#9aa42046efa424565ab8f8f451fcca955bf80b89"
+  integrity sha512-U0IUQHKXXn6PFo9nqsHphVCE5m3IntqZNB9Jjn7EB1lrR7YTDY3YWgFvEvwniTzXSvOH/XMzAZaIfJF/LvHYXg==

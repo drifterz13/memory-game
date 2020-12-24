@@ -1,5 +1,5 @@
 import { styled } from "goober";
-import { useState } from "preact/hooks";
+import { VNode } from "preact";
 
 const ModalContainer = styled("div")`
   position: absolute;
@@ -58,25 +58,26 @@ const XContainer = styled("div")`
 `;
 
 const XText = styled("span")`
-  color: red;
   padding: 4px;
   font-weight: bold;
   font-size: larger;
   cursor: pointer;
 `;
 
-export default function Modal(props) {
-  const [show, setShow] = useState(true);
+type Props = {
+  heading: string | VNode<any>;
+  description: string | VNode<any>;
+  onClose: () => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
+};
 
-  if (!show) {
-    return null;
-  }
-
+export default function Modal(props: Props) {
   return (
     <ModalContainer>
       <ModalContent>
         <XContainer>
-          <XText onClick={() => setShow(false)}>X</XText>
+          <XText onClick={props.onClose}>❌</XText>
         </XContainer>
         <Heading>{props.heading}</Heading>
         <Description>{props.description}</Description>

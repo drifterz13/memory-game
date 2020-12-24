@@ -1,17 +1,17 @@
-import { Fragment } from "preact";
+import { ComponentChildren, Fragment } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { styled } from "goober";
 
 import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
-import { LOSE, STARTED, WIN } from "../type";
+import { GameStatus, LOSE, STARTED, WIN } from "../type";
 
 const BoardContainer = styled("div")`
   padding: 2em;
   background: slateblue;
-  width: 600px;
-  height: 600px;
+  width: 650px;
+  height: 650px;
   border-radius: 4px;
   margin: 0 auto;
 
@@ -42,31 +42,25 @@ const Board = styled("div")`
   }
 `;
 
-const StartButton = styled("button")`
-  text-align: center;
-  padding: 1em;
-  font-size: 32px;
-  background: honeydew;
-  font-weight: bold;
-  border-radius: 25px;
-  cursor: pointer;
+type Props = {
+  status: GameStatus;
+  start: () => void;
+  setWin: () => void;
+  restart: () => void;
+  timeSpent: number;
+  startSection: ComponentChildren;
+};
 
-  @media only screen and (max-width: 768px) {
-    padding: 0.75em;
-    font-size: 18px;
-  }
-`;
-
-export default function BoardLayout(props) {
+export default function BoardLayout(props: Props) {
   const initialState = () => {
     const itemKeys = Object.keys(icons);
-    const count = {};
-    const keyMap = {};
+    const count: { [key: string]: number } = {};
+    const keyMap: { [key: string]: string } = {};
     for (const [index, key] of itemKeys.entries()) {
       keyMap[index] = key;
       count[key] = 0;
     }
-    const shuffledItems = [];
+    const shuffledItems: string[] = [];
 
     const updateItem = () => {
       const r = Math.floor(Math.random() * itemKeys.length);
@@ -86,14 +80,14 @@ export default function BoardLayout(props) {
   };
 
   const [items, setItems] = useState(initialState);
-  const [guessIndexes, setGuessIndexes] = useState([]);
-  const [showIndexes, setShowIndexes] = useState([]);
+  const [guessIndexes, setGuessIndexes] = useState<number[]>([]);
+  const [showIndexes, setShowIndexes] = useState<number[]>([]);
   const [computing, setComputing] = useState(false);
 
   const DELAY = 500;
 
   const reset = () => {
-    props.restart()
+    props.restart();
     setShowIndexes([]);
     setItems(initialState);
     setGuessIndexes([]);
@@ -124,7 +118,7 @@ export default function BoardLayout(props) {
     }
   }, [guessIndexes, showIndexes]);
 
-  const guess = (index) => {
+  const guess = (index: number) => {
     if (computing) {
       return;
     }
@@ -139,19 +133,17 @@ export default function BoardLayout(props) {
     <Fragment>
       <BoardContainer>
         <Board status={props.status}>
-          {props.status === STARTED || props.status === LOSE ? (
-            items.map((item, index) => {
-              const IconComponent = icons[item];
+          {props.status === STARTED || props.status === LOSE
+            ? items.map((item, index) => {
+                const IconComponent = icons[item];
 
-              return (
-                <Box onClick={() => guess(index)}>
-                  {showIndexes.includes(index) && <IconComponent />}
-                </Box>
-              );
-            })
-          ) : (
-            <StartButton onClick={props.start}>Start Game</StartButton>
-          )}
+                return (
+                  <Box onClick={() => guess(index)}>
+                    {showIndexes.includes(index) && <IconComponent />}
+                  </Box>
+                );
+              })
+            : props.startSection}
         </Board>
       </BoardContainer>
       {props.status === LOSE && (
@@ -159,6 +151,7 @@ export default function BoardLayout(props) {
           heading="You lose! 😭"
           description={`Don't give up. Try it again!`}
           onCancel={reset}
+          onClose={reset}
         />
       )}
       {props.status === WIN && (
@@ -166,6 +159,7 @@ export default function BoardLayout(props) {
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}
           onConfirm={reset}
+          onClose={reset}
         />
       )}
     </Fragment>
