@@ -12,7 +12,9 @@
 		"wmr": "^1.0.0"
 	},
 	"dependencies": {
+		"@urql/preact": "^1.4.3",
 		"goober": "^2.0.19-next.1",
+		"graphql": "^15.4.0",
 		"preact": "^10.5.7",
 		"preact-iso": "^0.2.0"
 	}

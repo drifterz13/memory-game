@@ -1,4 +1,4 @@
-import { Fragment } from "preact";
+import { ComponentChildren, Fragment } from "preact";
 import { useState, useEffect } from "preact/hooks";
 import { styled } from "goober";
 
@@ -6,13 +6,12 @@ import Box from "./Box";
 import { icons } from "../icons/index";
 import Modal from "./Modal";
 import { GameStatus, LOSE, STARTED, WIN } from "../type";
-import StartSection from "./StartSection";
 
 const BoardContainer = styled("div")`
   padding: 2em;
   background: slateblue;
-  width: 600px;
-  height: 600px;
+  width: 650px;
+  height: 650px;
   border-radius: 4px;
   margin: 0 auto;
 
@@ -49,6 +48,7 @@ type Props = {
   setWin: () => void;
   restart: () => void;
   timeSpent: number;
+  startSection: ComponentChildren;
 };
 
 export default function BoardLayout(props: Props) {
@@ -133,19 +133,17 @@ export default function BoardLayout(props: Props) {
     <Fragment>
       <BoardContainer>
         <Board status={props.status}>
-          {props.status === STARTED || props.status === LOSE ? (
-            items.map((item, index) => {
-              const IconComponent = icons[item];
+          {props.status === STARTED || props.status === LOSE
+            ? items.map((item, index) => {
+                const IconComponent = icons[item];
 
-              return (
-                <Box onClick={() => guess(index)}>
-                  {showIndexes.includes(index) && <IconComponent />}
-                </Box>
-              );
-            })
-          ) : (
-            <StartSection start={props.start} />
-          )}
+                return (
+                  <Box onClick={() => guess(index)}>
+                    {showIndexes.includes(index) && <IconComponent />}
+                  </Box>
+                );
+              })
+            : props.startSection}
         </Board>
       </BoardContainer>
       {props.status === LOSE && (

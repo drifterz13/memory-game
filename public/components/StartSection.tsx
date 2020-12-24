@@ -1,5 +1,5 @@
 import { styled } from "goober";
-import { useState } from "preact/hooks";
+import { StateUpdater } from "preact/hooks";
 
 const StartContainer = styled("div")`
   display: flex;
@@ -33,21 +33,21 @@ const Input = styled("input")`
 
 type Props = {
   start: () => void;
+  name: string;
+  setName: StateUpdater<string>;
 };
 
 export default function StartSection(props: Props) {
-  const [name, setName] = useState("");
-
   return (
     <StartContainer>
       <Input
         type="text"
         placeholder="Please insert your name."
         autofocus
-        value={name}
-        onInput={(e) => setName(e.target.value)}
+        value={props.name}
+        onInput={(e) => props.setName(e.target.value)}
       />
-      <StartButton disabled={!name} onClick={props.start}>
+      <StartButton disabled={!props.name} onClick={props.start}>
         Start Game
       </StartButton>
     </StartContainer>
