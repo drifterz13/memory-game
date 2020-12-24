@@ -10,13 +10,13 @@ const RankPageContainer = styled("div")`
   background: white;
 
   @media only screen and (max-width: 768px) {
-    width: 300px;
+    width: 330px;
   }
 `;
 
 const RankTable = styled("div")`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 60px 1fr 1fr 1fr;
 `;
 
 const RankHeader = styled("div")`
@@ -25,7 +25,6 @@ const RankHeader = styled("div")`
   text-align: center;
   background: cornflowerblue;
   font-weight: bold;
-  width: 220px;
 
   border-top: 2px solid;
   border-bottom: 2px solid;
@@ -36,35 +35,33 @@ const RankHeader = styled("div")`
   }
 
   @media only screen and (max-width: 768px) {
-    width: 100px;
-    padding: 0.25em;
+    padding: 0;
     font-size: large;
   }
 `;
 
 const RankItem = styled("div")`
   padding: 1em;
-  width: 220px;
   background: aliceblue;
   border-bottom: 2px solid;
   border-right: 2px solid;
-  text-align: center;
+  display: grid;
+  place-items: center;
 
-  &:nth-of-type(3n + 1) {
+  &:nth-of-type(4n + 1) {
     border-left: 2px solid;
     border-bottom: 2px solid;
     border-right: 2px solid;
   }
 
   @media only screen and (max-width: 768px) {
-    width: 100px;
-    padding: 0.25em;
+    padding: 0;
   }
 `;
 
 const RanksQuery = `
   query {
-    ranks {
+    ranks (order_by:{ time_spent: asc }, limit: 10) {
       id
       name
       created_at
@@ -84,12 +81,14 @@ export default function Rank() {
   return (
     <RankPageContainer>
       <RankTable>
+        <RankHeader>No.</RankHeader>
         <RankHeader>User 👤</RankHeader>
         <RankHeader>Time spent ⌛</RankHeader>
         <RankHeader>Date 📅</RankHeader>
-        {data.ranks.map((rank) => {
+        {data.ranks.map((rank, index) => {
           return (
             <Fragment>
+              <RankItem>{index + 1}</RankItem>
               <RankItem>{rank.name}</RankItem>
               <RankItem>{rank.time_spent}s</RankItem>
               <RankItem>{getFormatDate(rank.created_at)}</RankItem>

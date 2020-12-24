@@ -13,9 +13,11 @@ const Nav = styled("nav")`
   }
 `;
 
-const NavTitle = styled("span")`
+const NavTitle = styled("a")`
   grid-column: 1 / 4;
   font-weight: bold;
+  text-decoration: none;
+  color: black;
 
   @media only screen and (max-width: 768px) {
     grid-column: 1 / 3;
@@ -24,23 +26,29 @@ const NavTitle = styled("span")`
 
 const NavLinkContainer = styled("div")`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 
   @media only screen and (max-width: 768px) {
     grid-column: 3 / 5;
   }
 `;
 
+const NavLink = styled("a")`
+  &:hover {
+    color: red;
+  }
+`;
+
 export default function Navbar() {
   return (
     <Nav>
-      <NavTitle>SillyBrain🧠</NavTitle>
+      <NavTitle href="/">SillyBrain🧠</NavTitle>
       <NavLinkContainer>
         <span>
-          <a href="/">Game🎮</a>
+          <NavLink href="/">Game🎮</NavLink>
         </span>
         <span>
-          <a href="/rank">Rank🏆</a>
+          <NavLink href="/rank">Rank🏆</NavLink>
         </span>
       </NavLinkContainer>
     </Nav>

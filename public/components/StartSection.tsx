@@ -4,7 +4,7 @@ import { StateUpdater } from "preact/hooks";
 const StartContainer = styled("div")`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 250px;
 `;
 
 const StartButton = styled("button")`
@@ -29,6 +29,7 @@ const StartButton = styled("button")`
 const Input = styled("input")`
   height: 40px;
   padding: 0.5em;
+  font-size: 16px;
 `;
 
 type Props = {
