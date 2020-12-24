@@ -3,7 +3,7 @@ import { useState, useEffect } from "preact/hooks";
 import { styled } from "goober";
 
 import Box from "./Box";
-import { icons } from "../icons/index";
+import { animalIcons } from "../icons/index";
 import Modal from "./Modal";
 import { GameStatus, LOSE, STARTED, WIN } from "../type";
 
@@ -51,19 +51,30 @@ type Props = {
   startSection: ComponentChildren;
 };
 
+const getRandomItems = () => {
+  const arr = [];
+  const keys = Object.keys(animalIcons);
+  for (let i = 0; i < 8; i++) {
+    const r = Math.floor(Math.random() * keys.length);
+    const [icon] = keys.splice(r, 1);
+    arr.push(icon);
+  }
+  return arr;
+};
+
 export default function BoardLayout(props: Props) {
   const initialState = () => {
-    const itemKeys = Object.keys(icons);
+    const items = getRandomItems();
     const count: { [key: string]: number } = {};
     const keyMap: { [key: string]: string } = {};
-    for (const [index, key] of itemKeys.entries()) {
+    for (const [index, key] of items.entries()) {
       keyMap[index] = key;
       count[key] = 0;
     }
     const shuffledItems: string[] = [];
 
     const updateItem = () => {
-      const r = Math.floor(Math.random() * itemKeys.length);
+      const r = Math.floor(Math.random() * items.length);
       const item = keyMap[r];
 
       if (count[item] === 2) {
@@ -73,7 +84,7 @@ export default function BoardLayout(props: Props) {
       count[item] += 1;
     };
 
-    for (let i = 0; i < itemKeys.length * 2; i++) {
+    for (let i = 0; i < items.length * 2; i++) {
       updateItem();
     }
     return shuffledItems;
@@ -135,11 +146,13 @@ export default function BoardLayout(props: Props) {
         <Board status={props.status}>
           {props.status === STARTED || props.status === LOSE
             ? items.map((item, index) => {
-                const IconComponent = icons[item];
+                const animalSVG = animalIcons[item];
 
                 return (
                   <Box onClick={() => guess(index)}>
-                    {showIndexes.includes(index) && <IconComponent />}
+                    {showIndexes.includes(index) && (
+                      <img src={animalSVG} alt={item} />
+                    )}
                   </Box>
                 );
               })

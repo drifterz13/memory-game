@@ -31,6 +31,7 @@ export default function Game() {
   const restart = () => {
     setStatus(NOT_STARTED);
     setTimeSpent(0);
+    setName('')
   };
 
   useEffect(() => {
