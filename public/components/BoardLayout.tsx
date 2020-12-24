@@ -95,7 +95,7 @@ export default function BoardLayout(props: Props) {
   const [showIndexes, setShowIndexes] = useState<number[]>([]);
   const [computing, setComputing] = useState(false);
 
-  const DELAY = 500;
+  const DELAY = 100;
 
   const reset = () => {
     props.restart();
