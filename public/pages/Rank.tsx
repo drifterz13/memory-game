@@ -79,7 +79,10 @@ export default function Rank() {
         setRanks(data.ranks);
         setFetching(false);
       })
-      .catch((err) => setError(err));
+      .catch((err) => {
+        setError(err);
+        setFetching(false);
+      });
   }, []);
 
   if (fetching) return <Loading />;
