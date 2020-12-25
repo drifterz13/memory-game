@@ -5,7 +5,7 @@ import { styled } from "goober";
 import Box from "./Box";
 import { animalIcons } from "../icons/index";
 import Modal from "./Modal";
-import { GameStatus, LOSE, STARTED, WIN } from "../type";
+import { GameStatus } from "../type";
 
 const BoardContainer = styled("div")`
   padding: 2em;
@@ -25,11 +25,11 @@ const BoardContainer = styled("div")`
 const Board = styled("div")`
   display: grid;
   grid-template-columns: ${(props) =>
-    props.status === STARTED || props.status === LOSE
+    props.status === "start" || props.status === "lose"
       ? "repeat(4, 1fr)"
       : "1fr"};
   grid-template-rows: ${(props) =>
-    props.status === STARTED || props.status === LOSE
+    props.status === "start" || props.status === "lose"
       ? "repeat(4, 1fr)"
       : "1fr"};
   place-items: center;
@@ -144,7 +144,7 @@ export default function BoardLayout(props: Props) {
     <Fragment>
       <BoardContainer>
         <Board status={props.status}>
-          {props.status === STARTED || props.status === LOSE
+          {props.status === "start" || props.status === "lose"
             ? items.map((item, index) => {
                 const AnimalIcon = animalIcons[item];
 
@@ -157,7 +157,7 @@ export default function BoardLayout(props: Props) {
             : props.startSection}
         </Board>
       </BoardContainer>
-      {props.status === LOSE && (
+      {props.status === "lose" && (
         <Modal
           heading="You lose! 😭"
           description={`Don't give up. Try it again!`}
@@ -165,7 +165,7 @@ export default function BoardLayout(props: Props) {
           onClose={reset}
         />
       )}
-      {props.status === WIN && (
+      {props.status === 'saved' && (
         <Modal
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}

@@ -1,70 +1,52 @@
-import { useMutation } from "@urql/preact";
 import { Fragment } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect } from "preact/hooks";
+// @ts-ignore
+import { useMachine } from "preact-robot";
 import BoardLayout from "../components/BoardLayout";
 import StartSection from "../components/StartSection";
 import TimeTracking from "../components/TimeTracking";
-import { GameStatus, LOSE, NOT_STARTED, STARTED, WIN } from "../type";
-
-const UpdateRank = `
-  mutation($rank: ranks_insert_input!) {
-    insert_ranks_one(object: $rank) {
-      name
-      time_spent
-    }
-  }
-`;
+import Loading from "../components/Loading";
+import { EVENT, machine } from "../lib/gameMachine";
+import Modal from "../components/Modal";
 
 export default function Game() {
-  const [name, setName] = useState("");
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [, updateRank] = useMutation(UpdateRank);
-  const [updating, setUpdating] = useState(false);
-
-  const [status, setStatus] = useState<GameStatus>(NOT_STARTED);
-  const setLose = () => setStatus(LOSE);
-  const setWin = () => {
-    setStatus(WIN);
-  };
-
-  const startGame = () => setStatus(STARTED);
-  const restart = () => {
-    setStatus(NOT_STARTED);
-    setTimeSpent(0);
-    setName('')
-  };
+  const [current, send] = useMachine(machine);
+  const { timeSpent } = current.context;
 
   useEffect(() => {
-    // TODO: Handle this case properly.
-    if (status === WIN && timeSpent !== 0) {
-      if (updating) {
-        return;
-      }
-      updateRank({ rank: { name, time_spent: timeSpent } }).then(() => {
-        setUpdating(false);
-      });
-    }
-  }, [status, timeSpent]);
-
-  useEffect(() => {
-    if (timeSpent === 60) {
-      setLose();
-    }
-  }, [timeSpent]);
+    console.log(current.name);
+  }, [current.name]);
 
   return (
     <Fragment>
-      <TimeTracking status={status} setTimeSpent={setTimeSpent} />
+      <TimeTracking
+        status={current.name}
+        setLose={() => send(EVENT.LOSE)}
+        save={(timeSpent: number) => send({ type: EVENT.SAVE, timeSpent })}
+      />
       <BoardLayout
-        status={status}
-        start={startGame}
-        setWin={setWin}
-        restart={restart}
+        status={current.name}
+        start={() => send(EVENT.START)}
+        setWin={() => send(EVENT.WIN)}
+        restart={() => send(EVENT.RESET)}
         timeSpent={timeSpent}
         startSection={
-          <StartSection start={startGame} name={name} setName={setName} />
+          <StartSection
+            start={(playerName: string) =>
+              send({ type: EVENT.START, playerName })
+            }
+          />
         }
       />
+      {current.name === "saving" ? <Loading /> : null}
+      {current.name === "failed" ? (
+        <Modal
+          heading="Error! 👻"
+          description="Something went wrong. Please try again."
+          onClose={() => send(EVENT.RESET)}
+          onCancel={() => send(EVENT.RESET)}
+        />
+      ) : null}
     </Fragment>
   );
 }

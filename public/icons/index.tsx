@@ -1,5 +1,7 @@
 import { ComponentChildren } from "preact";
 
+/** Open source SVG from https://openmoji.org/ */
+
 import BearSVG from "./animal/bear";
 import DeerSVG from "./animal/deer";
 import DogSVG from "./animal/dog";
