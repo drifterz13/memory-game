@@ -31,7 +31,7 @@ const context = () => ({
 });
 
 async function save(ctx: Context) {
-  const rank = { name: ctx.playerName, timeSpent: ctx.timeSpent };
+  const rank = { name: ctx.playerName, time_spent: ctx.timeSpent };
   return updateRank({ rank });
 }
 

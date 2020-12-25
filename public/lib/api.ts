@@ -20,7 +20,7 @@ export async function getRanks() {
 }
 
 export async function updateRank(variables: {
-  rank: { name: string; timeSpent: number };
+  rank: { name: string; time_spent: number };
 }) {
   const RankMutation = `
     mutation($rank: ranks_insert_input!) {
@@ -30,5 +30,5 @@ export async function updateRank(variables: {
       }
     }
   `;
-  return graph(RankMutation, variables);
+  return graph(RankMutation)(variables);
 }
