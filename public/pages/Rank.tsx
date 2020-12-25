@@ -1,6 +1,7 @@
 import { useQuery } from "@urql/preact";
 import { styled } from "goober";
 import { Fragment } from "preact";
+import Loading from "../components/Loading";
 
 const RankPageContainer = styled("div")`
   width: 660px;
@@ -76,7 +77,7 @@ export default function Rank() {
   });
   const { data, fetching, error } = result;
 
-  if (fetching) return <p>Loading ...</p>;
+  if (fetching) return <Loading />;
   if (error) return <p>Something went wrong. {error}</p>;
   return (
     <RankPageContainer>
