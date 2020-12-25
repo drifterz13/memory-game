@@ -1,6 +1,6 @@
 import { styled } from "goober";
 import { useState, useEffect, useRef } from "preact/hooks";
-import { GameStatus, NOT_STARTED, STARTED, WIN } from "../type";
+import { GameStatus } from "../type";
 
 const TimeTrackingText = styled("p")`
   text-align: center;
@@ -10,32 +10,33 @@ const TimeTrackingText = styled("p")`
 
 type Props = {
   status: GameStatus;
-  setTimeSpent: (time: number) => void;
+  save: (time: number) => void;
+  setLose: () => void;
 };
 
 export default function TimeTracking(props: Props) {
   const [time, setTime] = useState(60); // one minute
-  const timeRef = useRef<any>();
+  const timeRef = useRef<NodeJS.Timer>();
 
   useEffect(() => {
     const cleanup = () => clearInterval(timeRef.current);
 
-    if (props.status === NOT_STARTED) {
+    if (props.status === "setup") {
       setTime(60);
       return;
     }
 
-    if (props.status === WIN) {
-      props.setTimeSpent(60 - time);
+    if (props.status === "win") {
       console.log(`Time spent: ${60 - time}s`);
+      props.save(60 - time);
       cleanup();
       return;
     }
 
-    if (props.status === STARTED) {
+    if (props.status === "start") {
       timeRef.current = setInterval(() => {
         if (time === 0) {
-          props.setTimeSpent(60);
+          props.setLose();
           cleanup();
           return;
         }
@@ -49,7 +50,9 @@ export default function TimeTracking(props: Props) {
   return (
     <div>
       <TimeTrackingText>
-        {props.status == NOT_STARTED ? "not started." : `${time} s`}
+        {props.status == "idle" || props.status === "setup"
+          ? "not started."
+          : `${time} s`}
       </TimeTrackingText>
     </div>
   );
