@@ -1,8 +1,9 @@
-import graphql from "graphql.js";
-
-const graph = graphql("https://silly-brain.hasura.app/v1/graphql", {
-  asJSON: true,
-});
+const graph = (window as any).graphql(
+  "https://silly-brain.hasura.app/v1/graphql",
+  {
+    asJSON: true,
+  }
+);
 
 export async function getRanks() {
   const RanksQuery = `

@@ -12,11 +12,6 @@ goober@^2.0.19-next.1:
   resolved "https://registry.yarnpkg.com/goober/-/goober-2.0.19-next.1.tgz#6881ffba6346ed8cabc0872981771de791f855b3"
   integrity sha512-1HlFxG2rYS6cag21p7stYv5f+sa0CQm8TCegcMIffBKDmfN30tLpCN0op4pDh2Xo34pwLe7PFYF6ZZRqovRX5A==
 
-graphql.js@^0.6.7:
-  version "0.6.7"
-  resolved "https://registry.yarnpkg.com/graphql.js/-/graphql.js-0.6.7.tgz#e76e6fe36e1c2e1c01a1ff4ae0e690eb8ac3798c"
-  integrity sha512-pGODcTc9cED1XmJ5xbhBIFlq0tx4VFoiBQ+FmQNKm4iNpCKInCQIc1sYeQSC4Co+Da9pCoUmJK8bUXANBMLgKg==
-
 preact-iso@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preact-iso/-/preact-iso-0.2.0.tgz#f7d00716b5e2cef72d9262199a9b44b7c35a9204"
