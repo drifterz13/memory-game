@@ -1,4 +1,13 @@
-import { createMachine, immediate, reduce, state, transition } from "robot3";
+import {
+  createMachine,
+  immediate,
+  reduce,
+  state,
+  transition,
+  invoke,
+} from "robot3";
+
+import { updateRank } from "./api";
 
 export const EVENT = {
   SETUP: "setup",
@@ -11,12 +20,20 @@ export const EVENT = {
 
 type Context = {
   timeSpent: number;
+  playerName: string;
+  error: Error | null;
 };
 
 const context = () => ({
   timeSpent: 0,
   playerName: "",
+  error: null,
 });
+
+async function save(ctx: Context) {
+  const rank = { name: ctx.playerName, timeSpent: ctx.timeSpent };
+  return updateRank({ rank });
+}
 
 export const machine = createMachine(
   {
@@ -35,7 +52,7 @@ export const machine = createMachine(
     win: state(
       transition(
         EVENT.SAVE,
-        "save",
+        "saving",
         reduce<Context, { timeSpent: number }>((ctx, ev) => ({
           ...ctx,
           timeSpent: ev.timeSpent,
@@ -43,7 +60,20 @@ export const machine = createMachine(
       )
     ),
     lose: state(transition(EVENT.RESET, "idle", reduce(context))),
-    save: state(transition(EVENT.RESET, "idle", reduce(context))),
+    saving: invoke(
+      save,
+      transition("done", "saved"),
+      transition(
+        "error",
+        "failed",
+        reduce<Context, { error: Error }>((ctx, ev) => ({
+          ...ctx,
+          error: ev.error,
+        }))
+      )
+    ),
+    saved: state(transition(EVENT.RESET, "idle", reduce(context))),
+    failed: state(transition(EVENT.RESET, "idle", reduce(context))),
   },
   context
 );

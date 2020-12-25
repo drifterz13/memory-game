@@ -140,8 +140,6 @@ export default function BoardLayout(props: Props) {
     setShowIndexes((state) => [...state, index]);
   };
 
-  const hasWon = () => props.status === "win" || props.status === "save";
-
   return (
     <Fragment>
       <BoardContainer>
@@ -167,7 +165,7 @@ export default function BoardLayout(props: Props) {
           onClose={reset}
         />
       )}
-      {hasWon() && (
+      {props.status === 'saved' && (
         <Modal
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}

@@ -12,10 +12,11 @@
 		"wmr": "^1.0.0"
 	},
 	"dependencies": {
-		"@urql/preact": "^1.4.3",
 		"goober": "^2.0.19-next.1",
-		"graphql": "^15.4.0",
+		"graphql.js": "^0.6.7",
 		"preact": "^10.5.7",
-		"preact-iso": "^0.2.0"
+		"preact-iso": "^0.2.0",
+		"preact-robot": "^0.2.3",
+		"robot3": "^0.2.18"
 	}
 }

@@ -1,35 +1,19 @@
-import { useMutation } from "@urql/preact";
 import { Fragment } from "preact";
 import { useEffect } from "preact/hooks";
-import { useMachine } from "preact-robot";
+// @ts-ignore
+import { useMachine } from 'preact-robot'
 import BoardLayout from "../components/BoardLayout";
 import StartSection from "../components/StartSection";
 import TimeTracking from "../components/TimeTracking";
+import Loading from "../components/Loading";
 import { EVENT, machine } from "../lib/gameMachine";
-
-const UpdateRank = `
-  mutation($rank: ranks_insert_input!) {
-    insert_ranks_one(object: $rank) {
-      name
-      time_spent
-    }
-  }
-`;
 
 export default function Game() {
   const [current, send] = useMachine(machine);
-  const { timeSpent, playerName } = current.context;
-
-  const [, updateRank] = useMutation(UpdateRank);
+  const { timeSpent } = current.context;
 
   useEffect(() => {
     console.log(current.name);
-    if (current.name === "save") {
-      console.log("time spent saving ..", timeSpent);
-      // TODO: Add loading state for this.
-      updateRank({ rank: { name: playerName, time_spent: timeSpent } });
-      return;
-    }
   }, [current.name]);
 
   return (
@@ -53,6 +37,7 @@ export default function Game() {
           />
         }
       />
+      {current.name === "saving" ? <Loading /> : null}
     </Fragment>
   );
 }

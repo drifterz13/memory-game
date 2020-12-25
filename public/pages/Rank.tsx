@@ -1,7 +1,8 @@
-import { useQuery } from "@urql/preact";
 import { styled } from "goober";
 import { Fragment } from "preact";
+import { useEffect, useState } from "preact/hooks";
 import Loading from "../components/Loading";
+import { getRanks } from "../lib/api";
 
 const RankPageContainer = styled("div")`
   width: 660px;
@@ -60,25 +61,30 @@ const RankItem = styled("div")`
   }
 `;
 
-const RanksQuery = `
-  query {
-    ranks (order_by:{ time_spent: asc }, limit: 10) {
-      id
-      name
-      created_at
-      time_spent
-    }
-  }
-`;
+type Rank = {
+  name: string;
+  time_spent: number;
+  created_at: string;
+};
 
 export default function Rank() {
-  const [result] = useQuery({
-    query: RanksQuery,
-  });
-  const { data, fetching, error } = result;
+  const [fetching, setFetching] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [ranks, setRanks] = useState<Rank[]>([]);
+
+  useEffect(() => {
+    setFetching(true);
+    getRanks()
+      .then((data) => {
+        setRanks(data.ranks);
+        setFetching(false);
+      })
+      .catch((err) => setError(err));
+  }, []);
 
   if (fetching) return <Loading />;
   if (error) return <p>Something went wrong. {error}</p>;
+
   return (
     <RankPageContainer>
       <RankTable>
@@ -86,7 +92,7 @@ export default function Rank() {
         <RankHeader>User 👤</RankHeader>
         <RankHeader>Time spent ⌛</RankHeader>
         <RankHeader>Date 📅</RankHeader>
-        {data.ranks.map((rank, index) => {
+        {ranks.map((rank, index) => {
           return (
             <Fragment>
               <RankItem>{index + 1}</RankItem>
