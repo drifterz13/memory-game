@@ -11,8 +11,6 @@ const Rank = lazy(() => import("./pages/Rank"));
 
 setup(h);
 
-console.log("secret", process.env.ADMIN_SECRET);
-
 export function App() {
   return (
     <LocationProvider>

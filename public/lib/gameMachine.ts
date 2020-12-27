@@ -24,6 +24,26 @@ type Context = {
   error: Error | null;
 };
 
+const saveRankMachine = createMachine(
+  {
+    saving: invoke(
+      save,
+      transition("done", "saved"),
+      transition(
+        "error",
+        "failed",
+        reduce<Context, { error: Error }>((ctx, ev) => ({
+          ...ctx,
+          error: ev.error,
+        }))
+      )
+    ),
+    saved: state(),
+    failed: state(),
+  },
+  (context: Context) => context
+);
+
 const context = () => ({
   timeSpent: 0,
   playerName: "",
@@ -52,7 +72,7 @@ export const machine = createMachine(
     win: state(
       transition(
         EVENT.SAVE,
-        "saving",
+        "save",
         reduce<Context, { timeSpent: number }>((ctx, ev) => ({
           ...ctx,
           timeSpent: ev.timeSpent,
@@ -60,20 +80,18 @@ export const machine = createMachine(
       )
     ),
     lose: state(transition(EVENT.RESET, "idle", reduce(context))),
-    saving: invoke(
-      save,
-      transition("done", "saved"),
+    save: invoke(
+      saveRankMachine,
       transition(
-        "error",
-        "failed",
-        reduce<Context, { error: Error }>((ctx, ev) => ({
+        "done",
+        "finish",
+        reduce<Context, { data: Context }>((ctx, ev) => ({
           ...ctx,
-          error: ev.error,
+          error: ev.data.error,
         }))
       )
     ),
-    saved: state(transition(EVENT.RESET, "idle", reduce(context))),
-    failed: state(transition(EVENT.RESET, "idle", reduce(context))),
+    finish: state(transition(EVENT.RESET, "idle", reduce(context))),
   },
   context
 );

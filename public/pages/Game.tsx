@@ -1,5 +1,4 @@
 import { Fragment } from "preact";
-import { useEffect } from "preact/hooks";
 // @ts-ignore
 import { useMachine } from "preact-robot";
 import BoardLayout from "../components/BoardLayout";
@@ -11,11 +10,7 @@ import Modal from "../components/Modal";
 
 export default function Game() {
   const [current, send] = useMachine(machine);
-  const { timeSpent } = current.context;
-
-  useEffect(() => {
-    console.log(current.name);
-  }, [current.name]);
+  const { timeSpent, error } = current.context;
 
   return (
     <Fragment>
@@ -39,7 +34,7 @@ export default function Game() {
         }
       />
       {current.name === "saving" ? <Loading /> : null}
-      {current.name === "failed" ? (
+      {current.name === "finish" && error ? (
         <Modal
           heading="Error! 👻"
           description="Something went wrong. Please try again."
