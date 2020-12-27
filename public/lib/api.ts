@@ -1,6 +1,9 @@
 const graph = (window as any).graphql(
   "https://silly-brain.hasura.app/v1/graphql",
   {
+    headers: {
+      "x-hasura-admin-secret": process.env.ADMIN_SECRET,
+    },
     asJSON: true,
   }
 );

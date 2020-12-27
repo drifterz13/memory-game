@@ -165,7 +165,7 @@ export default function BoardLayout(props: Props) {
           onClose={reset}
         />
       )}
-      {props.status === 'saved' && (
+      {props.status === 'finish' && (
         <Modal
           heading="You win! 🏆"
           description={`Time spent: ${props.timeSpent}s`}

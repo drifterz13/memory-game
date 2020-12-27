@@ -3,7 +3,6 @@ export type GameStatus =
   | "setup"
   | "start"
   | "win"
-  | "saving"
-  | "saved"
-  | "failed"
-  | "lose";
+  | "lose"
+  | "save"
+  | "finish";
