@@ -8,6 +8,8 @@ const graph = (window as any).graphql(
   }
 );
 
+console.log("debug", process.env.ADMIN_SECRET);
+
 export async function getRanks() {
   const RanksQuery = `
     query {
