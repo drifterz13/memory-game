@@ -27,7 +27,6 @@ export default function TimeTracking(props: Props) {
     }
 
     if (props.status === "win") {
-      console.log(`Time spent: ${60 - time}s`);
       props.save(60 - time);
       cleanup();
       return;

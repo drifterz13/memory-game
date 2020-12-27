@@ -34,7 +34,7 @@ export default function Game() {
         }
       />
       {current.name === "saving" ? <Loading /> : null}
-      {current.name === "finish" && error ? (
+      {error ? (
         <Modal
           heading="Error! 👻"
           description="Something went wrong. Please try again."
