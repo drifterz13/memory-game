@@ -50,7 +50,7 @@ const context = () => ({
   error: null,
 });
 
-async function save(ctx: Context) {
+export async function save(ctx: Context) {
   const rank = { name: ctx.playerName, time_spent: ctx.timeSpent };
   return updateRank({ rank });
 }
