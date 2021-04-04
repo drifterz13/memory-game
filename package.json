@@ -2,13 +2,18 @@
 	"scripts": {
 		"start": "wmr",
 		"build": "wmr build",
-		"serve": "wmr serve"
+		"serve": "wmr serve",
+		"test": "yarn jest"
 	},
 	"alias": {
 		"react": "preact/compat",
 		"react-dom": "preact/compat"
 	},
 	"devDependencies": {
+		"@types/jest": "^26.0.22",
+		"jest": "^26.6.3",
+		"ts-jest": "^26.5.4",
+		"typescript": "^4.2.3",
 		"wmr": "^1.0.0"
 	},
 	"dependencies": {

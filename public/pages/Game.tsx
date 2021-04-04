@@ -1,5 +1,4 @@
 import { Fragment } from "preact";
-// @ts-ignore
 import { useMachine } from "preact-robot";
 import BoardLayout from "../components/BoardLayout";
 import StartSection from "../components/StartSection";
@@ -13,6 +12,7 @@ export default function Game() {
   const { timeSpent, error } = current.context;
 
   return (
+    // @ts-ignore
     <Fragment>
       <TimeTracking
         status={current.name}
